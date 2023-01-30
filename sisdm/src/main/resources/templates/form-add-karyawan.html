@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>SI-SDM</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'/karyawan'})"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2>Tambah Karyawan</h2>
+        <br>
+        <form th:action="@{/karyawan/tambah}" th:object="${karyawan}" method="POST">
+          Nama Karyawan: <br>
+          <input class="form-control" type="text" th:field="*{namaDepan}"/>
+          <input class="form-control" type="text" th:field="*{namaBelakang}"/>
+          <br><br>
+
+          Email: <br>
+          <input class="form-control" type="text" th:field="*{email}"/>
+          <br><br>
+
+          Tanggal Lahir: <br>
+          <input class="form-control" type="date" th:field="*{tanggalLahir}"/>
+          <br><br>
+
+          Jenis Kelamin : <br>
+          <select class="form-control" type="i" th:field="*{jenisKelamin}">
+            <option th:value="1">Laki-laki</option>
+            <option th:value="2">Perempuan</option>
+          </select>
+
+
+          <br>
+          <table class="table">
+            <thead>
+            <th>Daftar Sertifikasi: </th>
+            <th>
+              <button class="btn btn-primary" type="submit" name="addRow">+ Tambah Sertifikasi</button>
+            </th>
+            </thead>
+            <tbody>
+            <tr th:each="sertifikasi, iterationStatus : *{sertifikasiKaryawan}">
+              <td>
+                <select name="idSertifikasi" th:field="*{sertifikasiKaryawan[__${iterationStatus.index}__].idSertifikasiKaryawan.idSertifikasi}"
+                        class="form-control">
+                  <div th:each="sertifikasiEx, iterationStatus2 : ${listSertifikasiExisting}">
+                    <option th:value="${sertifikasiEx.idSertifikasi}" th:text="${sertifikasiEx.namaSertifikasi}"></option>
+                  </div>
+                </select>
+                <input class="form-control" type="date" th:field="*{sertifikasiKaryawan[__${iterationStatus.index}__].tanggalPengambilan}"/>
+              </td>
+              <td>
+                <button th:value="${iterationStatus.index}" class="btn btn-danger" type="submit"
+                        name="deleteRow">Hapus</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <br><br>
+
+          <button class="btn btn-primary" type="submit" name="save">Submit</button>
+          <a class="btn btn-primary" href="/">Home</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

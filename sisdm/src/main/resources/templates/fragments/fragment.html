@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>fragment</title>
+  <head th:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  </head>
+  <head th:fragment="js">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFIBw8HfCJo="
+            crossorigin="anonymous"
+    ></script>
+    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+  </head>
+</head>
+
+<body>
+<nav th:fragment="navbar (pagenow)" class="navbar navbar-expand-lg navbar-dark" style="background-color: #df1d5a">
+    <div class="d-flex container-fluid">
+    <a class="navbar-brand font-weight-bold text-white" href="/">SI-SDM</a>
+  <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end">
+    <ul class="navbar-nav">
+<!--      <li class="nav-item" th:classappend="${pagenow == '/'} ? active : ''">-->
+<!--        <a class="nav-link" th:href="@{/}">Beranda</a>-->
+<!--      </li>-->
+      <li class="nav-item" th:classappend="${pagenow == '/karyawan'} ? active : ''">
+        <a class="nav-link " th:href="@{/karyawan/viewall}" >Karyawan</a>
+      </li>
+      <li class="nav-item" th:classappend="${pagenow == '/presensi'} ? active : ''">
+        <a class="nav-link" th:href="@{/presensi/viewall}">Presensi</a>
+      </li>
+        <li class="nav-item" th:classappend="${pagenow == '/tugas'} ? active : ''">
+            <a class="nav-link" th:href="@{/tambah-tugas}">Tugas</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Filter
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Cari tugas berdasarkan karyawan yang memiliki status tertentu</a>
+                <a class="dropdown-item" href="#">Cari karyawan berdasarkan sertifikat</a>
+            </div>
+        </li>
+    </ul>
+<!--    <form class="form-inline my-2 my-lg-0" th:action="@{/course/view}" method="GET">-->
+<!--      <input class="form-control mr-sm-2" type="search"-->
+<!--             name="code" placeholder="Code Course" aria-label="Search">-->
+<!--      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>-->
+<!--    </form>-->
+  </div>
+    </div>
+</nav>
+</body>
+
+</html>

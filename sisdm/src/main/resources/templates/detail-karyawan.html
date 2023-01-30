@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>SI-SDM</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'/karyawan'})"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2>Detail Karyawan</h2>
+        <br>
+        <p th:text="'Nama: ' + ${fullName}"></p>
+        <p th:text="'Jenis Kelamin: ' + ${jenisKelamin}"></p>
+        <p th:text="'Tanggal Lahir: ' + ${#temporals.format(karyawan.tanggalLahir, 'dd MMMM yyyy')}"></p>
+        <p th:text="'Email: ' + ${karyawan.email}"></p>
+
+        <div th:if="*{karyawan.sertifikasiKaryawan.size() != 0}">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>No</th>
+              <th class="text-center">Nama Sertifikasi</th>
+              <th class="text-center">No Sertifikasi</th>
+              <th class="text-center" >Tanggal Pengambilan</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sertifikasiKaryawan, iterationStatus : ${karyawan.sertifikasiKaryawan}">
+              <td th:text="${iterationStatus.count}"></td>
+              <td th:text="${sertifikasiKaryawan.sertifikasi.namaSertifikasi}"></td>
+              <td th:text="${sertifikasiKaryawan.noSertifikasi}"></td>
+              <td th:text="${#temporals.format(sertifikasiKaryawan.tanggalPengambilan, 'dd MMMM yyyy')}"></td>
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <br><br>
+        <br>
+        <a class="btn btn-primary" href="/karyawan/viewall">Kembali</a>
+        <a class="btn btn-primary" th:href="@{/karyawan/} + ${karyawan.idKaryawan} + @{/ubah}">Edit</a>
+        <br><br>
+        <form th:action="@{/karyawan/} + ${karyawan.idKaryawan} + @{/hapus}" th:object="${karyawan}" method="POST">
+          <button class="btn btn-danger" th:value="${karyawan.idKaryawan}" type="submit" name="idHapus">Hapus</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

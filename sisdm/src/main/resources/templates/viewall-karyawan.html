@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>SI-SDM</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'/karyawan'})"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2>Daftar Karyawan</h2>
+        <br>
+        <a class="btn btn-primary" th:href="@{/karyawan/tambah}">Tambah Karyawan</a>
+        <br><br>
+        <div th:if="*{listKaryawan.size() != 0}">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Email</th>
+              <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="karyawan, iterationStatus : ${listKaryawan}">
+              <td th:text="${iterationStatus.count}"></td>
+              <td th:text="${karyawan.namaDepan} +' ' + ${karyawan.namaBelakang}"></td>
+              <td class="col-md-3" th:text="${karyawan.email}"></td>
+
+              <td>
+                <a class="btn btn-primary text-wrap" style="width: 6rem;" th:href="@{/karyawan/} + ${karyawan.idKaryawan}">Detail</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div th:unless="*{listKaryawan.size() != 0}">
+          <h2 th:text="'Tidak ada Karyawan'"></h2>
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>SI-SDM</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'/presensi'})"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2>Update Presensi</h2>
+        <br>
+
+        <form th:action="@{/presensi/} + ${presensi.idPresensi} + @{/ubah}" th:object="${presensi}" method="POST">
+          <input type="hidden" th:field="*{idPresensi}" />
+          <input type="hidden" th:field="*{karyawan.idKaryawan}" />
+          <input type="hidden" th:field="*{tanggalPresensi}" />
+          <input type="hidden" th:field="*{waktuMasuk}" />
+
+
+          Nama Karyawan: <br>
+          <td>
+            <option th:value="${presensi.karyawan}" th:text="${presensi.karyawan.namaDepan}+' '+${presensi.karyawan.namaBelakang}" disabled></option>
+          </td>
+          <br>
+
+          Tanggal: <br>
+          <input class="form-control" disabled type="date" th:field="*{tanggalPresensi}"/>
+          <br><br>
+
+          Waktu Masuk: <br>
+          <input class="form-control" disabled type="time" th:field="*{waktuMasuk}" />
+          <br><br>
+
+          Waktu Keluar: <br>
+          <input class="form-control" type="time" th:field="*{waktuKeluar}"/>
+          <br><br>
+
+          <table class="table">
+            <thead>
+            <th>Daftar Tugas: </th>
+            <th>
+              <button class="btn btn-primary" type="submit" name="addRow">+ Tambah Sertifikasi</button>
+            </th>
+            </thead>
+            <tbody>
+            <tr th:each="tugas, iterationStatus : *{listTugas}">
+              <td>
+                <select name="idTugas" th:field="*{listTugas[__${iterationStatus.index}__].idTugas}"
+                        class="form-control">
+                  <div th:each="tugasEx, iterationStatus2 : ${listTugasExisting}">
+                    <option th:value="${tugasEx.idTugas}" th:text="${tugasEx.namaTugas}"></option>
+
+                    </option>
+                  </div>
+                </select>
+                <select name="status" th:field="*{listTugas[__${iterationStatus.index}__].statusTugas}"
+                        class="form-control">
+                  <option th:value="0">Dimulai</option>
+                  <option th:value="1">Dikerjakan</option>
+                  <option th:value="2">Selesai</option>
+                </select>
+              </td>
+              <td>
+                <button th:value="${iterationStatus.index}" class="btn btn-danger" type="submit"
+                        name="deleteRow">Hapus</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <button class="btn btn-primary" type="submit">Submit</button>
+          <a class="btn btn-primary" href="/presensi/viewall">Batalkan</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

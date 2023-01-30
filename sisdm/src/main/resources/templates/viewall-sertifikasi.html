@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>SI-SDM</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'/'})"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2>Filter Sertifikasi</h2>
+        <h4>Berdasarkan Sertifikasi</h4>
+
+        <form th:action="@{/filter-sertifikasi}" method="GET">
+
+          Pilih Sertifikat: <br>
+          <td>
+            <select name="id-sertifikasi" class="form-control">
+              <div th:each="sertifikasiEx, iterationStatus2 : ${listSertifikasi}">
+                <option th:value="${sertifikasiEx.idSertifikasi}" th:text="${sertifikasiEx.namaSertifikasi}"></option>
+              </div>
+            </select>
+          </td>
+          <br>
+
+          <button class="btn btn-primary" type="submit" name="filter">Cari</button>
+        </form>
+
+        <br><br>
+        <div th:if="*{listSertifikasiKar.size() != 0}">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sertifikasiKaryawan, iterationStatus : ${listSertifikasiKar}">
+              <td th:text="${iterationStatus.count}"></td>
+              <td th:text="${sertifikasiKaryawan.karyawan.namaDepan} + ' ' + ${sertifikasiKaryawan.karyawan.namaBelakang}"></td>
+              <td th:text="${sertifikasiKaryawan.karyawan.email}"></td>
+              <td> <a class="btn btn-primary text-wrap" style="width: 6rem;" th:href="@{/karyawan/} + ${sertifikasiKaryawan.karyawan.idKaryawan}">Detail</a> </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div th:unless="*{listSertifikasiKar.size() != 0}">
+          <h2 th:text="'Tidak ada Sertifikasi'"></h2>
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

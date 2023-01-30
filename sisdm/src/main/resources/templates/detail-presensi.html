@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>SI-SDM</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'/presensi'})"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2>Detail Presensi</h2>
+        <br>
+        <p th:text="'Nama Karyawan:     ' + ${presensi.karyawan.namaDepan}+ ' ' +${presensi.karyawan.namaBelakang}"></p>
+        <p th:text="'Tanggal Presensi:  ' + ${#temporals.format(presensi.tanggalPresensi, 'dd MMMM yyyy')}"></p>
+        <p th:text="'Waktu Masuk:       ' + ${#temporals.format(presensi.waktuMasuk, 'hh.mm a')}"></p>
+        <p th:text="'Waktu Keluar:      ' + ${#temporals.format(presensi.waktuKeluar, 'hh.mm a')}"></p>
+        Status:<br>
+        <p th:if="${presensi.statusPresensi}">TEPAT WAKTU</p>
+        <p th:unless="${presensi.statusPresensi}">TERLAMBAT</p>
+
+        <div th:if="*{presensi.listTugas.size() != 0}">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Tugas</th>
+              <th>Deskripsi Tugas</th>
+              <th>Story Point</th>
+              <th class="text-center">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tugas, iterationStatus : ${presensi.listTugas}">
+              <td th:text="${iterationStatus.count}"></td>
+              <td th:text="${tugas.namaTugas}"></td>
+              <td th:text="${tugas.deskripsiTugas}"></td>
+              <td th:text="${tugas.storypoint}"></td>
+              <td th:switch="${tugas.statusTugas}">
+                <span th:case="'0'">Dimulai</span>
+                <span th:case="'1'">Dikerjakan</span>
+                <span th:case="'2'">Selesai</span>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <br><br>
+
+        <br>
+        <a class="btn btn-primary" href="/presensi/viewall">Kembali</a>
+        <a class="btn btn-primary" th:href="@{/presensi/} + ${presensi.idPresensi} + @{/ubah}">Edit</a>
+        <br><br>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

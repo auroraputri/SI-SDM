@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'/'})"></nav>
+
+<br><br>
+<div class="d-flex justify-content-center">
+    <div class="m-4">
+        <h2>Selamat datang di SI-SDM</h2>
+        <div class="d-flex justify-content-center">
+            <a th:href="@{/karyawan/viewall}" class="mx-2 btn btn-primary" style="width: 8rem; font-size: larger;" >Karyawan</a>
+            <a th:href="@{/presensi/viewall}" class="mx-2 btn btn-primary" style="width: 8rem; font-size: larger;" >Presensi</a>
+            <a th:href="@{/tambah-tugas}" class="mx-2 btn btn-primary" style="width: 8rem; font-size: larger;" >Tambah Tugas</a>
+        </div>
+        <br>
+    </div>
+</div>
+<br>
+<div class="d-flex justify-content-center">
+    <div class="m-4">
+        <h3>Filter:</h3>
+        <div class="d-flex justify-content-center">
+            <a class="mx-2 btn btn-outline-primary text-wrap" style="width: 8rem; font-size: small;" th:href="@{/filter-tugas}">Cari tugas berdasarkan karyawan yang memiliki status tertentu</a>
+            <a class="mx-2 btn btn-outline-primary text-wrap" style="width: 8rem; font-size: small;" th:href="@{/filter-sertifikasi}">Cari karyawan berdasarkan sertifikasi</a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+
+</html>

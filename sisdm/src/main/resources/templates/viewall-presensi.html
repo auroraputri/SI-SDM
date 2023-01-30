@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>SI-SDM</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'/presensi'})"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2>Daftar Presensi</h2>
+        <br>
+        <a class="btn btn-primary" th:href="@{/presensi/tambah}">Tambah Presensi</a>
+        <br><br>
+        <div th:if="*{listPresensi.size() != 0}">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Tanggal</th>
+              <th>Status</th>
+              <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="presensi, iterationStatus : ${listPresensi}">
+              <td th:text="${iterationStatus.count}"></td>
+              <td th:text="${presensi.karyawan.namaDepan}+ ' ' +${presensi.karyawan.namaBelakang}"></td>
+              <td th:text="${#temporals.format(presensi.tanggalPresensi, 'dd MMMM yyyy')}"></td>
+              <td th:if="${presensi.statusPresensi}">TEPAT WAKTU</td>
+              <td th:unless="${presensi.statusPresensi}">TERLAMBAT</td>
+              <td>
+                <a class="btn btn-primary text-wrap" style="width: 6rem;" th:href="@{@{/presensi/} + ${presensi.idPresensi}}">Detail</a>
+              </td>
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div th:unless="*{listPresensi.size() != 0}">
+          <h2 th:text="'Tidak ada Presensi'"></h2>
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

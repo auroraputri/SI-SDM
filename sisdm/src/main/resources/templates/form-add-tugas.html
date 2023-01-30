@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>SI-SDM</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar (${'/tugas'})"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2>Tambah Tugas</h2>
+        <br>
+
+        <form th:action="@{/tambah-tugas}" th:object="${tugas}" method="POST">
+
+          Nama Tugas: <br>
+          <input class="form-control" type="text" th:field="*{namaTugas}"/>
+          <br><br>
+
+          Deskripsi: <br>
+          <input class="form-control" type="text" th:field="*{deskripsiTugas}"/>
+          <br><br>
+
+          Storypoint: <br>
+          <input class="form-control" type="number" th:field="*{storypoint}"/>
+          <br><br>
+
+          Status: <br>
+          <select name="statusTugas">
+            <option value="0">Dimulai</option>
+            <option value="1">Dikerjakan</option>
+            <option value="2">Selesai</option>
+          </select>
+          <br><br>
+
+          <button class="btn btn-primary" type="submit" name="save">Submit</button>
+          <a class="btn btn-primary" href="/filter-tugas">Batalkan</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
